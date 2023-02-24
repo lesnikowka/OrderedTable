@@ -1,8 +1,6 @@
 #pragma once
 #include <vector>
 #include <algorithm>
-#include <functional>
-#include <string>
 
 template <class T1, class T2>
 class OrderedTable{
