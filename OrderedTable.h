@@ -8,14 +8,11 @@ template <class T1, class T2>
 class OrderedTable{
 	std::vector<std::pair<T1, T2>> _data;
 
-	class Iterator;
 	class Comparator {
 	public:
 		bool operator()(const std::pair<T1, T2>& p1, const std::pair<T1, T2>& p2) {
 			return p1.first < p2.first;
 		}
-		
-		
 	};
 public:
 	class Iterator {
@@ -59,13 +56,16 @@ public:
 	Iterator end() {
 		return Iterator(_data.end());
 	}
-	void Add(const std::pair<T1, T2>& row) {
-		if (!Contains(row.first)) {
+	void insert(const std::pair<T1, T2>& row) {
+		if (find(row.first) == end()) {
 			Comparator comp;
 			_data.insert(std::upper_bound(_data.begin(), _data.end(), row, comp), row);
 		}
 	}
-	void Erase(const T1& key) {
+	void emplace(const T1& key, const T2& data) {
+		insert({ key, data });
+	}
+	void erase(const T1& key) {
 		if (Contains(key)) {
 			Comparator comp;
 			_data.erase(std::lower_bound(_data.begin(), _data.end(), key, comp));
@@ -74,10 +74,10 @@ public:
 			throw std::exception("Out of the bounds");
 		}
 	}
-	void Erase(Iterator it) {
+	void erase(Iterator it) {
 		_data.erase(it._iterator);
 	}
-	Iterator Find(const T1& key) {
+	Iterator find(const T1& key) {
 		Comparator comp;
 		std::pair<T1, T2> pair(key, T2());
 		auto it = std::lower_bound(_data.begin(), _data.end(), pair, comp);
@@ -88,8 +88,5 @@ public:
 		else {
 			return Iterator(it);
 		}
-	}
-	bool Contains(const T1& key) {
-		return Find(key) != end();
 	}
 };
