@@ -21,24 +21,28 @@ public:
 		Iterator() = delete;
 		Iterator(const typename std::vector<std::pair<T1, T2>>::iterator& iterator) : _iterator(iterator) {}
 		Iterator(const Iterator& iterator) : _iterator(iterator._iterator) {}
+		Iterator& operator=(const Iterator& it) {
+			_iterator = it._iterator;
+			return *this;
+		}
 
 		std::pair<T1, T2>& operator*() {
 			return *_iterator;
 		}
-		Iterator& operator++() {
-			return ++_iterator;
+		Iterator operator++() {
+			return Iterator(++_iterator);
 		}
 		Iterator operator++(int) {
 			Iterator result = *this;
-			++result;
+			operator++();
 			return result;
 		}
-		Iterator& operator--() {
-			return --_iterator;
+		Iterator operator--() {
+			return Iterator(--_iterator);
 		}
 		Iterator operator--(int) {
 			Iterator result = *this;
-			--result;
+			operator--();
 			return result;
 		}
 		bool operator==(const Iterator& iterator) {
