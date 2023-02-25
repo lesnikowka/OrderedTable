@@ -8,7 +8,7 @@ class OrderedTable{
 
 	class Comparator {
 	public:
-		bool operator()(const std::pair<T1, T2>& p1, const std::pair<T1, T2>& p2) {
+		bool operator()(const std::pair<T1, T2>& p1, const std::pair<T1, T2>& p2) const noexcept{
 			return p1.first < p2.first;
 		}
 	};
