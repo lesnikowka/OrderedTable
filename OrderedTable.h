@@ -68,9 +68,10 @@ public:
 		insert({ key, data });
 	}
 	void erase(const T1& key) {
-		if (Contains(key)) {
+		if (find(key) != end()) {
 			Comparator comp;
-			_data.erase(std::lower_bound(_data.begin(), _data.end(), key, comp));
+			std::pair<T1, T2> pair(key, T2());
+			_data.erase(std::lower_bound(_data.begin(), _data.end(), pair, comp));
 		}
 		else {
 			throw std::exception("Out of the bounds");
