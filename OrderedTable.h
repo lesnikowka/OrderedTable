@@ -88,8 +88,6 @@ public:
 		if (it == _data.end() || (*it).first != key) {
 			return end();
 		}
-		else {
-			return Iterator(it);
-		}
+		return Iterator(it);
 	}
 };
